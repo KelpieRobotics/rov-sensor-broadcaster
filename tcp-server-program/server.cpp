@@ -1,33 +1,34 @@
 #include <netinet/in.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <strings.h>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <arpa/inet.h>
 #include <unistd.h>
-#include <string>
 
-#define MAX 1024
+#include "sht30/sht30.h"
+
+#define MAX_BUFFER_SIZE 1024
 #define PORT 8080
 #define MAXLINE 1024
 #define SA struct sockaddr
 
 
-void send_temp(float temperature, int sockfd) {
-    char buffer[256];
-    snprintf(buffer, sizeof(buffer), "Temperature: %.2f\n", temperature);
+void send_temp(float int_temperature, float int_humidity, int sockfd) {
+    char buffer[MAX_BUFFER_SIZE];
+    int len = snprintf(buffer, sizeof(buffer), "Internal Temperature: %.2f\nInternal Humidity: %.2f\n", int_temperature, int_humidity);
 
     // send the temperature data over tcp
-    write(sockfd, buffer, sizeof(buffer));
+    printf("Sending: %s", buffer);
+    write(sockfd, buffer, len * sizeof(char));
     bzero(buffer, sizeof(buffer));
-    
 }
 
 void func(int sockfd)
 {
-    float temp = 70.5;
-    send_temp(temp, sockfd);
+    readSHT30();
+    send_temp(getTemperatureSHT30(), getHumiditySHT30(), sockfd);
 }
 
 int main() {
@@ -56,6 +57,8 @@ int main() {
         exit(1);
     }
 
+    initSHT30();
+
     // now server is ready to listen and verification
         if ((listen(sockfd, 5)) != 0) {
             printf("Listen failed...\n");
@@ -77,10 +80,3 @@ int main() {
 
     return 0;
 }
-
-
-
-
-
-
-
