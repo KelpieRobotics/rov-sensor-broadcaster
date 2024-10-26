@@ -8,6 +8,7 @@
 #include <unistd.h>
 
 #include "sht30/sht30.h"
+#include "ds18b20.h"
 
 #define MAX_BUFFER_SIZE 1024
 #define PORT 8080
@@ -15,20 +16,20 @@
 #define SA struct sockaddr
 
 
-void send_temp(float int_temperature, float int_humidity, int sockfd) {
+void send_temp(float int_temperature, float int_humidity, float externalTemperature, int sockfd) {
     char buffer[MAX_BUFFER_SIZE];
-    int len = snprintf(buffer, sizeof(buffer), "Internal Temperature: %.2f\nInternal Humidity: %.2f\n", int_temperature, int_humidity);
+    int len = snprintf(buffer, sizeof(buffer), "Internal Temperature: %.2f\nInternal Humidity: %.2f\nExternal Temperature: %.2f\n", int_temperature, int_humidity,externalTemperature);
 
     // send the temperature data over tcp
     printf("Sending: %s", buffer);
     write(sockfd, buffer, len * sizeof(char));
     bzero(buffer, sizeof(buffer));
-}
+} 
 
 void func(int sockfd)
 {
     readSHT30();
-    send_temp(getTemperatureSHT30(), getHumiditySHT30(), sockfd);
+    send_temp(getTemperatureSHT30(), getHumiditySHT30(), readDS18B20(), sockfd);
 }
 
 int main() {
