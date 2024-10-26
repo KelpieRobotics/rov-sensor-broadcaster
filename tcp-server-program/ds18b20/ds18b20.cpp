@@ -27,7 +27,7 @@ float readDS18B20() {
         close(fd);
         fd = open(path, O_RDONLY);
 
-        if(fd > 0) {
+        if(fd >= 0) {
             bytes_read = read(fd, temp, 6);
             temp[bytes_read-1] = 0; // replace \n with \0
             char* endptr;
@@ -39,7 +39,7 @@ float readDS18B20() {
             }
             else temperature = (float)temp_int/1000;
         }
-        else printf("Error occured while opening device");
+        else printf("Error occured while opening device\n");
     }
     else printf("Error occured while opening device directory\n");
 
