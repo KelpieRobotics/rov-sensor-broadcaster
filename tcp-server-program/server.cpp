@@ -8,7 +8,7 @@
 #include <unistd.h>
 
 #include "sht30/sht30.h"
-#include "ds18b20.h"
+#include "ds18b20/ds18b20.h"
 
 #define MAX_BUFFER_SIZE 1024
 #define PORT 8080
