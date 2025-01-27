@@ -1,4 +1,4 @@
-#include "sht30.h"
+#include "ros-temperature-broadcaster/sht30.h"
 
 #include <fcntl.h>
 #include <unistd.h>

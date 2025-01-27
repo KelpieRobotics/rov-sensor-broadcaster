@@ -1,4 +1,4 @@
-#include "ds18b20.h"
+#include "ros-temperature-broadcaster/ds18b20.h"
 
 #include <stdlib.h>
 #include <unistd.h>
