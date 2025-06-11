@@ -6,7 +6,7 @@
 #define MAXLINE 1024
 #define SA struct sockaddr
 
-void initSHT30();
+void initSHT30(const char* path);
 bool setTimeoutSHT30();
 void readSHT30();
 float getTemperatureSHT30();

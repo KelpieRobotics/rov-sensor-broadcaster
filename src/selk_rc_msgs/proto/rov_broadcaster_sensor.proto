@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package kelpie_sht_msgs;
+
+
+message SHTChannels {
+    float temperature = 0.0;
+    float humidity = 0.0;
+
+}

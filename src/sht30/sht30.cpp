@@ -13,12 +13,13 @@
 int fd;
 float temperature, humidity;
 
+
 bool setTimeoutSHT30(int microseconds) {
     return ioctl(fd, I2C_TIMEOUT, microseconds/10) == 0;
 }
-
-void initSHT30() {
-    fd = open("/dev/i2c-1", O_RDWR);
+// default: "/dev/i2c-1"
+void initSHT30(const char* path) {
+    fd = open(path, O_RDWR);
 
     if (fd < 0) {
         perror("Unable to open i2c file descriptor\n");
