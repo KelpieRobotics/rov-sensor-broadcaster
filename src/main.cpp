@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
         return 1;
     }
     UDP_SOCKET sht_udp("127.0.0.1", 5005, argv[1]);
-    sht_udp.run();
+    sht_udp.sendPacket();
 
     return 0;
 }

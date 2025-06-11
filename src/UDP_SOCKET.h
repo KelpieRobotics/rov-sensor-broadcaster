@@ -13,7 +13,7 @@ class UDP_SOCKET
 {
 public:
     UDP_SOCKET(const std::string& ip, uint16_t port, const char* dev);
-    void run();
+    void sendPacket();
 private:
     int sockfd;
     std::string ip;
@@ -21,5 +21,4 @@ private:
     const char* dev;
 
     void initializeSocket();
-    void sendPacket();
 };
